@@ -1,0 +1,6 @@
+program
+vjesala
+algoritam
+memorija
+pointer
+struktura
