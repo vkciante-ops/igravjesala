@@ -1,67 +1,73 @@
 #ifndef HEADER_H
 #define HEADER_H
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<time.h>
-#include<errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <errno.h>
 
-/* ================= KONSTANTE ================= */
-
+/* =========================================================
+   [9] MAKRO KONSTANTE
+   ========================================================= */
 #define MAX_TRIES 6
 #define WORD_FILE "words.txt"
-#define BACKUP_FILE "words_backup.txt"
+#define BACKUP_FILE "backup.txt"
 
-/* ================= IZBORNIK ================= */
-
+/* =========================================================
+   [4] ENUM
+   koristi se za izbornik
+   ========================================================= */
 typedef enum {
-	MENU_PLAY = 1,
-	MENU_ADD,
-	MENU_DELETE,
-	MENU_LIST,
-	MENU_SORT,
-	MENU_SEARCH,
-	MENU_BACKUP,
-	MENU_EXIT
+    MENU_PLAY = 1,
+    MENU_ADD,
+    MENU_UPDATE,
+    MENU_DELETE,
+    MENU_LIST,
+    MENU_SORT,
+    MENU_SEARCH,
+    MENU_BACKUP,
+    MENU_EXIT
 } MenuOption;
 
-/* ================= STRUCT ================= */
+/* =========================================================
+   [3][4][13] STRUCT + TYPEDEF
+   ========================================================= */
 typedef struct {
-	char* text;
+    char *text;
 } Word;
 
-/* ================= GLOBALE ================= */
-extern Word* words;
+/* =========================================================
+   [8] EXTERN GLOBALNE VARIJABLE
+   ========================================================= */
+extern Word *words;
 extern int wordCount;
-
-/* ================= FUNKCIJE ================= */
 
 /* CRUD */
 void loadWords();
 void saveWords();
 void addWord();
+void updateWord();
 void deleteWord();
 void listWords();
 
-/* GAME */
+/* igra */
 void playGame();
 char* getRandomWord();
 void drawHangman(int tries);
 
-/* SORT + SEARCH */
-int compareWords(const void* a, const void* b);
+/* sortiranje i pretraga */
 void sortWords();
 void searchWord();
+int compareWords(const void *a, const void *b);
 
-/* FILE OPS */
+/* [25] REKURZIJA */
+int recursiveBinarySearch(char *key, int left, int right);
+
+/* backup */
 void backupFile();
-void restoreFile();
 
-/* REKURZIJA */
-int recursiveBinarySearch(char* key, int left, int right);
-
-/* FUNCTION POINTER */
+/* [26] POKAZIVAČ NA FUNKCIJU */
 void executeOperation(void (*func)());
 
 #endif
