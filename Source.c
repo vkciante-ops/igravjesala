@@ -1,69 +1,89 @@
-#define _CRT_SECURE_NO_WARNINGS
-
 #include "header.h"
+
 int main() {
-	srand(time(NULL));
 
-	loadWords();
+    srand((unsigned)time(NULL));
 
-	int choice;
-	char searchBuf[100];
+    loadWords();
 
-	do {
-		printf("\n===== HANGMAN =====\n");
-		printf("1. Play\n");
-		printf("2. Add word\n");
-		printf("3. Delete word\n");
-		printf("4. List words\n");
-		printf("5. Sort words (qsort)\n");
-		printf("6. Search word (binary recursion)\n");
-		printf("7. Backup file\n");
-		printf("8. Exit\n");
-		printf("Choice: ");
+    /* =====================================================
+       [2] PRIMITIVNI TIP
+       ===================================================== */
+    int choice;
 
-		scanf("%d", &choice);
+    do {
 
-		switch ((MenuOption)choice) {
+        /* =================================================
+           [10] IZBORNIK
+           ================================================= */
+        printf("\n===== VJEŠALA =====\n");
+        printf("1. Igraj\n");
+        printf("2. Dodaj riječ\n");
+        printf("3. Ažuriraj riječ\n");
+        printf("4. Obriši riječ\n");
+        printf("5. Ispiši riječi\n");
+        printf("6. Sortiraj riječi\n");
+        printf("7. Pretraži riječ\n");
+        printf("8. Backup datoteke\n");
+        printf("9. Izlaz\n");
 
-		case MENU_PLAY:
-			executeOperation(playGame);
-			break;
+        scanf("%d", &choice);
 
-		case MENU_ADD:
-			executeOperation(addWord);
-			break;
+        /* ================================================
+           [11] ENUM U SWITCHU
+           ================================================ */
+        switch ((MenuOption)choice) {
 
-		case MENU_DELETE:
-			executeOperation(deleteWord);
-			break;
+            case MENU_PLAY:
+                executeOperation(playGame);
+                break;
 
-		case MENU_LIST:
-			executeOperation(listWords);
-			break;
+            case MENU_ADD:
+                executeOperation(addWord);
+                break;
 
-		case MENU_SORT:
-			sortWords();
-			break;
+            case MENU_UPDATE:
+                executeOperation(updateWord);
+                break;
 
-		case MENU_SEARCH:
-			searchWord();
-			break;
+            case MENU_DELETE:
+                executeOperation(deleteWord);
+                break;
 
-		case MENU_BACKUP:
-			backupFile();
-			break;
+            case MENU_LIST:
+                executeOperation(listWords);
+                break;
 
-		case MENU_EXIT:
-			printf("Exit...\n");
-			break;
-		}
+            case MENU_SORT:
+                sortWords();
+                break;
 
-	} while (choice != MENU_EXIT);
+            case MENU_SEARCH:
+                searchWord();
+                break;
 
-	for (int i = 0; i < wordCount; i++)
-		free(words[i].text);
+            case MENU_BACKUP:
+                backupFile();
+                break;
 
-	free(words);
+            case MENU_EXIT:
+                printf("Izlaz...\n");
+                break;
 
-	return 0;
+            default:
+                printf("Neispravan unos.\n");
+        }
+
+    } while (choice != MENU_EXIT);
+
+    /* =====================================================
+       [18] FREE MEMORIJE
+       ===================================================== */
+    for (int i = 0; i < wordCount; i++) {
+        free(words[i].text);
+    }
+
+    free(words);
+
+    return 0;
 }
